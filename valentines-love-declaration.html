@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Declaração de Amor - Dia dos Namorados</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap');
+
+    :root {
+      --color-primary: #e63946;
+      --color-secondary: #f1faee;
+      --color-accent: #a4161a;
+      --bg-gradient: linear-gradient(135deg, #f72585, #b5179e, #720026);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--color-secondary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      text-shadow: 0 0 8px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      background: rgba(255 255 255 / 0.1);
+      padding: 1.5rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 8px;
+      border: none;
+      padding: 0.75rem;
+      font-size: 1rem;
+      resize: vertical;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    input[type="file"],
+    input[type="date"] {
+      margin-top: 0.5rem;
+      color: var(--color-secondary);
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      background: rgba(255 255 255 / 0.15);
+      padding: 0.4rem 0.6rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: var(--color-primary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      margin-top: 1rem;
+      color: var(--color-secondary);
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--color-accent);
+    }
+
+    .preview-area {
+      margin-top: 2rem;
+      text-align: center;
+      max-width: 600px;
+      background: rgba(255 255 255 / 0.2);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      color: var(--color-secondary);
+    }
+
+    .preview-message {
+      font-size: 1.25rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      white-space: pre-wrap;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .preview-dias-namoro {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--color-accent);
+    }
+
+    .preview-photos {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .preview-photos img {
+      max-width: 150px;
+      max-height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border: 3px solid var(--color-secondary);
+    }
+
+    .qr-code-container {
+      margin-top: 2rem;
+      text-align: center;
+      width: 180px;
+      height: 180px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      background: var(--color-secondary);
+      border-radius: 12px;
+    }
+
+    .qr-code-label {
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-secondary);
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+      form {
+        max-width: 100%;
+      }
+      .preview-photos img {
+        max-width: 100px;
+        max-height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Declaração de Amor</h1>
+  <h2>Dia dos Namorados - Personalize seu Recado</h2>
+
+  <form id="loveForm" novalidate>
+    <label for="dateNamoro">Data do início do namoro:</label>
+    <input type="date" id="dateNamoro" name="dateNamoro" required />
+
+    <label for="message">Sua declaração de amor:</label>
+    <textarea id="message" name="message" placeholder="Escreva aqui tudo o que sente..." required></textarea>
+
+    <label for="photos">Selecione até 3 fotos especiais (jpg, png):</label>
+    <input type="file" id="photos" name="photos" accept="image/png, image/jpeg" multiple />
+
+    <button type="submit">Criar Declaração</button>
+  </form>
+
+  <section class="preview-area" id="previewSection" style="display:none;">
+    <div class="preview-message" id="previewMessage"></div>
+    <div class="preview-dias-namoro" id="previewDiasNamoro"></div>
+    <div class="preview-photos" id="previewPhotos"></div>
+
+    <div class="qr-code-container">
+      <div class="qr-code-label">Acesse sua declaração pelo QR Code:</div>
+      <div id="qrcode"></div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>
+    const loveForm = document.getElementById('loveForm');
+    const previewSection = document.getElementById('previewSection');
+    const previewMessage = document.getElementById('previewMessage');
+    const previewDiasNamoro = document.getElementById('previewDiasNamoro');
+    const previewPhotos = document.getElementById('previewPhotos');
+    const qrcodeContainer = document.getElementById('qrcode');
+    const dateNamoroInput = document.getElementById('dateNamoro');
+
+    function calculateDiasNamoro(startDate) {
+      const now = new Date();
+      const diffTime = now - startDate;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays >= 0 ? diffDays : 0;
+    }
+
+    function generateQRCode(url) {
+      try {
+        qrcodeContainer.innerHTML = '';
+        new QRCode(qrcodeContainer, {
+          text: url,
+          width: 180,
+          height: 180,
+          colorDark : "#e63946",
+          colorLight : "#f1faee",
+          correctLevel : QRCode.CorrectLevel.H
+        });
+      } catch (error) {
+        console.error("Erro ao gerar QR code:", error);
+      }
+    }
+
+    loveForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const dateValue = dateNamoroInput.value;
+      if (!dateValue) {
+        alert('Por favor, selecione a data do início do namoro.');
+        return;
+      }
+
+      const startDate = new Date(dateValue);
+      if (isNaN(startDate.getTime())) {
+        alert('Data inválida.');
+        return;
+      }
+
+      const message = loveForm.message.value.trim();
+      if (!message) {
+        alert('Por favor, escreva sua declaração de amor.');
+        return;
+      }
+
+      const files = loveForm.photos.files;
+      if (files.length > 3) {
+        alert('Por favor, selecione no máximo 3 fotos.');
+        return;
+      }
+
+      previewMessage.textContent = message;
+
+      const diasNamoro = calculateDiasNamoro(startDate);
+      previewDiasNamoro.textContent = `Dias de Namoro: ${diasNamoro} dia${diasNamoro !== 1 ? "s" : ""}`;
+
+      previewPhotos.innerHTML = '';
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = document.createElement('img');
+          img.src = event.target.result;
+          img.alt = 'Foto especial';
+          previewPhotos.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      previewSection.style.display = 'block';
+      loveForm.style.display = 'none';
+
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = `${baseUrl}?msg=${encodeURIComponent(message)}&dateNamoro=${encodeURIComponent(dateValue)}`;
+      generateQRCode(shareUrl);
+    });
+
+    function getParameterByName(name, url = window.location.href) {
+      name = name.replace(/[\[\]]/g, "\\$&");
+      const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+      const results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    window.addEventListener('load', () => {
+      const msgFromUrl = getParameterByName('msg');
+      const dateNamoroFromUrl = getParameterByName('dateNamoro');
+      if (msgFromUrl && dateNamoroFromUrl) {
+        previewMessage.textContent = msgFromUrl;
+
+        const startDate = new Date(dateNamoroFromUrl);
+        if (!isNaN(startDate.getTime())) {
+          const diasNamoro = calculateDiasNamoro(startDate);
+          previewDiasNamoro.textContent = `Dias de Namoro: ${diasNamoro} dia${diasNamoro !== 1 ? "s" : ""}`;
+        } else {
+          previewDiasNamoro.textContent = 'Data do namoro inválida.';
+        }
+
+        previewSection.style.display = 'block';
+        loveForm.style.display = 'none';
+
+        const baseUrl = window.location.origin + window.location.pathname;
+        const shareUrl = `${baseUrl}?msg=${encodeURIComponent(msgFromUrl)}&dateNamoro=${encodeURIComponent(dateNamoroFromUrl)}`;
+        generateQRCode(shareUrl);
+      }
+    });
+  </script>
+</body>
+</html>
